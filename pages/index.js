@@ -1,209 +1,221 @@
-import Head from 'next/head'
+import Link from 'next/link'
+
+import Layout from '../components/site/Layout'
+import Carousel from '../components/site/Carousel'
+import Reservations from '../components/site/Reservations'
 
 export default function Home() {
   return (
-    <div className="container">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main>
-        <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-
-        <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
-        </a>
-      </footer>
-
-      <style jsx>{`
-        .container {
-          min-height: 100vh;
-          padding: 0 0.5rem;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer img {
-          margin-left: 0.5rem;
-        }
-
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        a {
-          color: inherit;
-          text-decoration: none;
-        }
-
-        .title a {
-          color: #0070f3;
-          text-decoration: none;
-        }
-
-        .title a:hover,
-        .title a:focus,
-        .title a:active {
-          text-decoration: underline;
-        }
-
-        .title {
-          margin: 0;
-          line-height: 1.15;
-          font-size: 4rem;
-        }
-
-        .title,
-        .description {
-          text-align: center;
-        }
-
-        .description {
-          line-height: 1.5;
-          font-size: 1.5rem;
-        }
-
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-        }
-
-        .grid {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-wrap: wrap;
-
-          max-width: 800px;
-          margin-top: 3rem;
-        }
-
-        .card {
-          margin: 1rem;
-          flex-basis: 45%;
-          padding: 1.5rem;
-          text-align: left;
-          color: inherit;
-          text-decoration: none;
-          border: 1px solid #eaeaea;
-          border-radius: 10px;
-          transition: color 0.15s ease, border-color 0.15s ease;
-        }
-
-        .card:hover,
-        .card:focus,
-        .card:active {
-          color: #0070f3;
-          border-color: #0070f3;
-        }
-
-        .card h3 {
-          margin: 0 0 1rem 0;
-          font-size: 1.5rem;
-        }
-
-        .card p {
-          margin: 0;
-          font-size: 1.25rem;
-          line-height: 1.5;
-        }
-
-        .logo {
-          height: 1em;
-        }
-
-        @media (max-width: 600px) {
-          .grid {
-            width: 100%;
-            flex-direction: column;
-          }
-        }
-      `}</style>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
-    </div>
+    <Layout>
+      <Carousel />
+      <Welcome />
+      <BestDishes />
+      <Promotions />
+      <OurGallery />
+      <Reservations />
+    </Layout>
   )
 }
+
+
+function Welcome() {
+  return (
+    <section className="hero has-background-white st-welcome">
+      <div className="hero-body" data-animate="bottom">
+        <h1 className="title is-2 has-text-centered">Seja bem vindo ao Sabor & Delícia</h1>
+        <hr className="st-line" />
+        <div className="columns is-centered">
+          <div className="column is-9">
+            <p className="has-text-justified is-size-5">
+              Convidamos você para uma deliciosa festa de nossos pratos requintados. Com uma ampla variedade de cozinhas do mundo à sua escolha, garantimos uma suntuosa festa no nosso restaurante! Aqui você mergulhará em uma atmosfera amigável e romântica e desfrutará de nossa alta cozinha. Com a nossa grande variedade de pratos de todo o mundo, você pode se sentir um viajante e um verdadeiro gourmet!
+            </p>
+          </div>
+        </div>
+      </div>
+   </section>
+  )
+}
+
+
+function BestDishes() {
+  return (
+    <>
+      <section className="section">
+        <div className="container">
+          <div className="columns is-vcentered">
+            <div className="column" data-animate="left">
+              <div className="column">
+                <h4 className="title is-3">
+                  "O melhor da gastronomia contemporânea, aliada a uma alimentação saudável e prazerosa."
+                </h4>
+                <p className="is-size-5">
+                  A <span style={{fontWeight:"bold", fontStyle:"italic"}}>"Bisteca na parrilha"</span> é o carro-chefe da casa. Proveniente de carne de uma raça bovina especial, como todos os cortes da churrascaria, a bisteca é temperada apenas com sal grosso para destacar o sabor e qualidade da carne. Para alcançar o ponto ideal, a porção de 100 gramas leva aproximadamente 10 minutos na parrilha, que é levada ao fogo somente após o pedido do cliente.
+                </p>
+                <button className="button is-danger is-medium mt-5">Mais opções</button>
+              </div>
+            </div>
+            <div className="column" data-animate="right">
+              <img 
+                src="https://ld-wp73.template-help.com/wordpress/prod_21791/v1/wp-content/uploads/2018/06/home-img-1.png" alt="Prato principal do restaurante"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="section">
+        <div className="container">
+          <div className="columns is-vcentered">
+            <div className="column" data-animate="left">
+              <img 
+                src="https://ld-wp73.template-help.com/wordpress/prod_21791/v1/wp-content/uploads/2018/06/home-img-2.png" 
+                alt="Prato principal do jantar"
+              />
+            </div>
+            <div className="column" data-animate="right">
+              <h4 className="title is-3">
+                "Pratos deliciosos de frutos do mar, preparados com requinte e temperos de qualidade."
+              </h4>
+              <p className="is-size-5">
+                O <span style={{fontWeight:"bold", fontStyle:"italic"}}>"Camarão na Moranga"</span> é um prato típico da culinária litorânea brasileira, sendo servido e preparado com uma abóbora do tipo moranga, recheada com camarão e requeijão além de um tempero especial. Confira suas histórias e curiosidades, além de uma receita exclusiva criada por nossa equipe.              
+              </p>
+              <button className="button is-danger is-medium mt-5">Ver o cardápio</button>            
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  )
+}
+
+
+function Promotions() {
+  const list = [
+    {
+      id: 1,
+      image: 'https://picsum.photos/100/50',
+      legend: 'Prato promocional 01',
+      title: 'Macarronada com farinha',
+      description: 'Marcarrão, farinha, salada e arroz.',
+      price: 45.00
+    }, {
+      id: 1,
+      image: 'https://picsum.photos/100',
+      legend: 'Prato promocional 02',
+      title: 'Arroz e feijão gourmet',
+      description: 'Arroz cozido, salada crua, batata frita e feijão',
+      price: 35.50
+    }, {
+      id: 1,
+      image: 'https://picsum.photos/100',
+      legend: 'Prato promocional 03',
+      title: 'Feijão com arroz cozido',
+      description: 'Feijão, salada crua, vinagrete e farinha branca.',
+      price: 37.90
+    }
+  ]
+
+  return (
+    <section className="section" data-animate="bottom">
+      <div className="container">
+        <div className="mb-6">
+          <h1 className="title is-2 has-text-centered">Confira nossas promoções para hoje</h1>
+          <hr className="st-line" />
+        </div>
+        <div className="columns is-variable is-8">
+          {list.map((item, index) => (
+            <div key={index} className="column st-promotions">
+              <div className="card">
+                <div className="card-image">
+                  <figure className="image is-4by3">
+                    <img src={item.image} alt={item.legend} />
+                  </figure>
+                </div>
+                <div className="card-content">
+                  <h4 className="title is-4 mb-3">{item.title}</h4>
+                  <p className="has-text-justified description">{item.description}</p>
+                  <div className="level">
+                    <button className="level-left button is-danger is-medium">Eu quero</button>
+                    <p className="level-right is-size-3 has-text-right price">R$ {item.price}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>        
+      </div>
+    </section>
+  )
+}
+
+
+function OurGallery() {
+  return (
+    <section className="section" data-animate="bottom">
+
+      <div className="container">
+
+        <div className="mb-6">
+          <h1 className="title is-2 has-text-centered">Um ambiente perfeito ...</h1>
+          <hr className="st-line" />
+        </div>
+
+        <div className="columns mt-6">
+          <div className="column">
+            <figure className="image is-4by2">
+              <img src="https://cdn.pixabay.com/photo/2015/04/20/13/30/kitchen-731351__340.jpg" alt=""/>
+            </figure>
+          </div>
+          <div className="column">
+            <figure className="image is-4by2">
+              <img src="https://cdn.pixabay.com/photo/2016/11/18/14/05/brick-wall-1834784__340.jpg" alt=""/>
+            </figure>
+          </div>
+        </div>
+
+        <div className="columns">
+          <div className="column">
+            <figure className="image is-3by1">
+              <img src="https://cdn.pixabay.com/photo/2017/08/30/17/25/restaurant-2697945__340.jpg" alt=""/>
+            </figure>
+          </div>
+        </div>        
+
+        <div className="columns">
+
+          <div className="column">
+            <div className="columns">
+              <div className="column">
+                <figure className="image is-2by1">
+                  <img src="https://cdn.pixabay.com/photo/2018/08/10/21/52/restaurant-3597677__340.jpg" alt=""/>
+                </figure>
+              </div>  
+            </div>
+            <div className="columns">
+              <div className="column">
+                <figure className="image is-2by1">
+                  <img src="https://cdn.pixabay.com/photo/2014/04/05/11/27/buffet-315691__340.jpg" alt=""/>
+                </figure>
+              </div>
+            </div>
+          </div>
+
+          <div className="column">
+            <figure className="image is-1by1" style={{height: '100%'}}>
+              <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt=""
+               style={{objectFit: 'cover', objectPosition: 'bottom'}}/>
+            </figure>
+          </div>
+
+        </div>
+
+        <div className="columns is-centered mt-5">
+          <Link href="/gallery"><a className="button is-danger is-large">Quero ver mais ...</a></Link>
+        </div>
+
+      </div>
+
+    </section>
+  )
+}
+
+
