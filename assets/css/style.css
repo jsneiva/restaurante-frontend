@@ -173,9 +173,27 @@ footer .navbar a:hover {
 }
 
 .st-slider-container img {
-  height: 85vh;
-  width: auto !important;
+  object-position: center;
+  height: 80vh;
+  width: auto !important;   
 }
+
+@media (max-width: 730px) {
+
+  .st-slider-container img {
+    height: 50vh;
+  }
+  
+}
+
+@media (max-width: 400px) {
+
+  .st-slider-container img {
+    height: 25vh;
+  }
+  
+}
+
 
 .st-slider-body {
   position: absolute;
