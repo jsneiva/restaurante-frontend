@@ -8,7 +8,6 @@ import { userLoggedSSR } from '../../utils/auth'
 export default function(props) {
   return (
     <Layout>
-      {props.error && <p>{JSON.stringify(props.error)}</p>}
       <div className="columns">
         <div className="column">
           <BoxCounter 
@@ -56,18 +55,17 @@ export default function(props) {
 }
 
 export async function getServerSideProps(ctx) {
-  let data = {}, error = null  
+  let data = {}
   const user = await userLoggedSSR(ctx)
   if (user) {
     try {
       const resp = await axios.get('/totals')    
       data = resp.data
     } catch (e) {
-      error = e
       console.log('Não foi possível obter os totais')    
     }
   }
   return {
-    props: { ...data, error } 
+    props: { ...data } 
   }
 }
