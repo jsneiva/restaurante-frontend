@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import axios from '../../config/axios'
+import { userLoggedSSR } from '../../utils/auth'
 
 import Layout from '../../components/admin/Layout'
 import Table from '../../components/common/Table'
@@ -97,27 +98,26 @@ export default function(props) {
   return (
     <Layout>
       <div>
-        {dataEdit ? (
+        {dataEdit && 
           <Edit 
             data={dataEdit}
             save={save}
             cancel={cancel} 
           />
-        ) : (
-          <div className="columns">
-            <div className="column is-6">
-              <Button theme="primary" icon="fas fa-plus" onClick={add}>
-                Adicionar grupo
-              </Button>
-            </div>          
-            <div className="column is-6">
-              <FormInputSearch 
-                onChange={v => !v && load()}
-                onSubmit={search} 
-              />
-            </div>
+        }
+        <div className="columns">
+          <div className="column is-6">
+            <Button theme="primary" icon="fas fa-plus" onClick={add}>
+              Adicionar grupo
+            </Button>
+          </div>          
+          <div className="column is-6">
+            <FormInputSearch 
+              onChange={v => !v && load()}
+              onSubmit={search} 
+            />
           </div>
-        )}
+        </div>
         {state.error && 
           <MessageBox 
             small error 
@@ -132,6 +132,7 @@ export default function(props) {
             rows={state.data}
             removeRow={remove}
             editRow={edit}
+            loading={state.loading}
           />
         </div>
       </div>  
@@ -143,7 +144,6 @@ export default function(props) {
 function Edit(props) {
   const [data, setData] = useState(props.data)
   const ref = useRef()
-
 
   function onChange(name, value) {
     setData({ ...data, [name]: value })
@@ -157,23 +157,37 @@ function Edit(props) {
   useEffect(() => ref.current.focus())
 
   return (
-    <div className="adm-box-cad mb-5">
-      <form onSubmit={onSubmit}>
-        <div className="columns is-variable is-1">
-          {data.id && 
-            <div className="column is-1">
-              <Input type="text" label="ID" name="id" value={data.id} readOnly />
+    <div className="modal is-active">
+      <form onSubmit={onSubmit}>            
+        <div className="modal-background"></div>
+        <div className="modal-card">
+          <header className="modal-card-head">
+            <p className="modal-card-title">Cadastro de grupo</p>
+          </header>
+          <section className="modal-card-body">
+            <div className="columns is-variable is-1">
+              {data.id && 
+                <div className="column is-1">
+                  <Input type="text" label="ID" name="id" value={data.id} readOnly />
+                </div>
+              }
+              <div className="column">
+                <Input ref={ref} type="text" label="Nome do grupo" name="name" value={data.name} onChange={onChange} required />
+              </div>
             </div>
-          }
-          <div className="column">
-            <Input ref={ref} type="text" label="Nome do grupo" name="name" value={data.name} onChange={onChange} required />
-          </div>
-        </div>
-        <div className="mt-4">
-          <Button type="submit" theme="success" icon="fas fa-check">Salvar</Button>
-          <Button className="ml-2" theme="danger" icon="fas fa-times" onClick={props.cancel}>Cancelar</Button>
+          </section>          
+          <footer className="modal-card-foot">
+            <Button type="submit" theme="success" icon="fas fa-check">Salvar</Button>
+            <Button className="ml-2" theme="danger" icon="fas fa-times" onClick={props.cancel}>Cancelar</Button>
+          </footer>
         </div>
       </form>
     </div>
   )
+}
+
+
+export async function getServerSideProps(ctx) {
+  const user = await userLoggedSSR(ctx)
+  return { props: { user } }
 }

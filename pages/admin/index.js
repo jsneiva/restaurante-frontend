@@ -1,28 +1,20 @@
-import { useEffect } from 'react'
-import { useAppContext } from '../../components/providers/AppContext'
+import axios from '../../config/axios'
 
 import Layout from '../../components/admin/Layout'
 import BoxCounter from '../../components/admin/BoxCounter'
-// import { LineChartAdmin, PieChartAdmin } from '../../components/admin/Charts'
+import { LineChartAdmin, PieChartAdmin } from '../../components/admin/Charts'
+import { userLoggedSSR } from '../../utils/auth'
 
-export default (props) => {
+export default function(props) {
   return (
     <Layout>
       <div className="columns">
         <div className="column">
           <BoxCounter 
-            icon="fas fa-users"
-            bgColor="#273c75"
-            title="Clientes"
-            counter={50}
-          />
-        </div>
-        <div className="column">
-          <BoxCounter 
             icon="fas fa-chair"
             title="Reservas"
             bgColor="#c23616"
-            counter={50}
+            counter={props.reservations}
           />
         </div>
         <div className="column">
@@ -30,26 +22,46 @@ export default (props) => {
             icon="fas fa-phone"
             title="Contatos"
             bgColor="#10ac84"
-            counter={50}
+            counter={props.contacts}
           />
         </div>
         <div className="column">
           <BoxCounter 
-            icon="fas fa-user"
+            icon="fas fa-utensils"
+            bgColor="#273c75"
+            title="Produtos"
+            counter={props.products}
+          />
+        </div>
+        <div className="column">
+          <BoxCounter 
+            icon="fas fa-users"
             bgColor="#833471"
             title="Usuários"
-            counter={50}
+            counter={props.users}
           />
         </div>
       </div>
-      {/* <div className="columns">
+      <div className="columns mt-5">
         <div className="column">
           <LineChartAdmin />        
         </div>
-        <div className="column is-4">
-          <PieChartAdmin />       
+        <div className="column">
+         <PieChartAdmin />       
         </div>
-      </div> */}
+      </div> 
     </Layout>
   )
+}
+
+export async function getServerSideProps(ctx) {
+  let data = {}  
+  const user = await userLoggedSSR(ctx)
+  if (user) {
+    const resp = await axios.get('/totals')    
+    data = resp.data
+  }
+  return {
+    props: { ...data } 
+  }
 }

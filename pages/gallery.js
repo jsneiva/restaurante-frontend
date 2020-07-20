@@ -71,7 +71,7 @@ export default function Galllery() {
               return (
                 <div key={idx} className={`column is-${image.cols}`}>
                   <figure className="image">
-                    <img src={image.url} alt={`imagem ${idx}`} style={style}/>
+                    <img src={image.url} alt="Imagem de nossa galeria" style={style}/>
                   </figure>
                 </div>)
             })}

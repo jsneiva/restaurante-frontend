@@ -35,7 +35,7 @@ export default function SectionMenu(props) {
     let oMsg = null, result = []
     setLoading(true)
     try {
-      const resp = await axios.get(URL_API + '/menu/products?group_id=' + selGroup)
+      const resp = await axios.get('/menu/products?group_id=' + selGroup)
       result = resp.data
     } catch (e) {
       oMsg = {
@@ -84,11 +84,7 @@ export default function SectionMenu(props) {
                   <div className="columns">
                     <div className="column is-2">
                       <figure className="image is-square">
-                        <img 
-                          className="is-rounded"
-                          src="https://cdn.pixabay.com/photo/2017/05/07/08/56/pancakes-2291908__340.jpg" 
-                          alt=""
-                        />
+                        <img className="is-rounded" src={item.urlImage} alt={item.name} />
                       </figure>
                     </div>                    
                     <div className="column">
@@ -99,7 +95,20 @@ export default function SectionMenu(props) {
                         {item.description}
                       </p>
                       <p className="title is-4 my-3">
-                        {utils.formatCurrency(item.price)}
+                        {item.promotion ? (
+                          <>
+                            <span 
+                              style={{ 
+                                textDecoration: 'line-through',
+                                fontWeight: 'normal',
+                                fontSize: '0.8em'
+                              }}
+                            >{utils.formatCurrency(item.price)}</span>
+                            <span className="ml-4 has-text-success">{utils.formatCurrency(item.price_promo)}</span>
+                          </>
+                        ) : (
+                          utils.formatCurrency(item.price)
+                        )}
                       </p>
                     </div>
                   </div>

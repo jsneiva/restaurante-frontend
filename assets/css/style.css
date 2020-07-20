@@ -288,6 +288,11 @@ hr.st-line {
   border-right: 3px var(--color-logo-01) solid; 
 }
 
+.st-privacypolicy p {
+  text-align: justify;
+  margin: 15px 0;
+}
+
 .react-datepicker-wrapper {
   width: 100%;
   max-width: 100%;
@@ -548,6 +553,8 @@ hr.st-line {
   background-color: seagreen;
   font-family: Arial, Helvetica, sans-serif;    
   background-image: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,0.3));
+  box-shadow: 1px 2px 5px 0px #aca3a3;          
+  border-radius: 10px;  
 }
 
 .adm-box-counter hr {
@@ -568,7 +575,7 @@ hr.st-line {
   align-items: center;
   background-color: rgba(255,255,255,0.2);
   color: rgba(255,255,255,0.3);
-  font-size: 4em;
+  font-size: 3em;
 }
 
 .adm-box-counter [data-container] {
@@ -595,6 +602,8 @@ hr.st-line {
   display: flex;
   flex-direction: column;
   padding: 10px 20px;
+  box-shadow: 1px 2px 5px 0px #aca3a3;    
+  border-radius: 10px;
 }
 
 .adm-charts h4 {
@@ -606,13 +615,75 @@ hr.st-line {
   margin: 5px 0 10px 0;
 }
 
-.adm-charts [data-chart] {
-  height: 300px;
-}
-
 .adm-box-cad {
   background-color: transparent;
   padding: 15px;
   border: 1px solid #DDD;
   margin: 15px auto;
+}
+
+input[disabled] {
+  border-color: revert !important;
+}
+
+.table-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.table-container thead th {
+  background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(241,241,241,1) 35%,rgba(225,225,225,1) 59%,rgba(246,246,246,1) 100%);
+}
+
+
+#notfound {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-poppins);  
+}
+
+#notfound h1 {
+  color: var(--color-logo-02);
+  font-size: 10em;
+  font-weight: 900;
+  min-width: 200px;
+  text-align: center;
+  margin-right: 50px;
+  text-shadow: 2px 2px 4px black;
+}
+
+#notfound h2 {
+  color: var(--color-logo-01);
+  font-size: 2em;
+  font-weight: 700;
+}
+
+#notfound p {
+  padding: 30px 0;
+  font-size: 1.3em;
+  max-width: 600px;
+}
+
+.modal {
+  z-index: 1000
+}
+
+.modal .modal-background {
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal .modal-card-head {
+  padding: 15px;
+}
+.modal .modal-card-title {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+.modal .modal-card-foot {
+  padding: 10px 20px;
 }

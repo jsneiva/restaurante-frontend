@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-
 import Cookies from 'universal-cookie'
-
 import axios from '../../config/axios'
 
 const initialState = {

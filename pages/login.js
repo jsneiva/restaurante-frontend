@@ -58,6 +58,7 @@ export default function Login() {
         Router.push('/admin')
       }
     } catch (error) {
+      setLoading(false)      
       setMsg({
         error: true,
         message: typeof error === 'string' ? (
@@ -69,7 +70,6 @@ export default function Login() {
         )
       })
     }    
-    setLoading(false)
   }
 
   useEffect(() => {

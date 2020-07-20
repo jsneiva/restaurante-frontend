@@ -197,7 +197,7 @@ function Testimonials() {
               </p>
               <div className="has-text-centered mt-5">
                 <figure className="image is-128x128 is-inline-block">
-                  <img className="is-rounded" src={item.url} />
+                  <img className="is-rounded" src={item.url} alt={'imagem de '+item.name} />
                 </figure>
               </div>
               <p className="has-text-centered mt-2">

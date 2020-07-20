@@ -32,7 +32,7 @@ export function LineChartAdmin(props) {
     <div className="adm-charts">
       <h4>Resumo - Últimos 12 meses</h4>
       <hr/>
-      <div data-chart>
+      <div>
         <LineChart
           width={500}
           height={300}
@@ -70,7 +70,7 @@ export function PieChartAdmin(props) {
       <h4>Resumo - Últimos 12 meses</h4>
       <hr/>
       <div data-chart>
-        <PieChart width="100" height="300">
+        <PieChart width={500} height={300}>
           <Pie
             data={data}
             innerRadius={50}

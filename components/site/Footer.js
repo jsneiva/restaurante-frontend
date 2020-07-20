@@ -74,8 +74,11 @@ export default function Footer(props) {
                 <a className="column is-2 is-hidden-mobile" href="nortelink.com.br">
                   <img className="logo" src="/images/logo.svg" alt="Logo do Sabor e Delícia restaurante" />
                 </a>
-                <span className="column is-10 ml-2">Copyright © 2020. Todos os direitos reservados.</span>
+                <span className="column ml-2">Copyright © 2020. Todos os direitos reservados.</span>
               </div>
+            </div>
+            <div className="column has-text-centered">
+              <Link  href="/privacypolicy"><a>Política de privacidade</a></Link>
             </div>
             <div className="column is-hidden-mobile">
               <div className="navbar has-background-dark">

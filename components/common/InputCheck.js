@@ -1,6 +1,6 @@
 
 export default function({ label, checked, onChange, small, ...rest }) {
-  const style = 'ml-1' + (small ? ' is-size-7' : '')
+  const cssClass = 'ml-1' + (small ? ' is-size-7' : '')
 
   function handleChange(e) {
     const { name, checked } = e.target
@@ -15,7 +15,7 @@ export default function({ label, checked, onChange, small, ...rest }) {
         onChange={handleChange}
         {...rest} 
       />
-      <span className={style}>{label}</span>
+      <span className={cssClass}>{label}</span>
     </label>    
   )
 

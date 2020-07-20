@@ -18,14 +18,16 @@ export default forwardRef(({
 
   const [show, setShow] = useState(false)
   const isPassword = type && /password/i.test(type)
+  const isFile = type && /file/i.test(type)
   const _value = mask ? applyMask(value, mask) : value
-  const clsInput = classNames(
+  const cssClass = classNames(
     'control',
     iconLeft && 'has-icons-left',
-    (isPassword || iconRight) && 'has-icons-right',
+    (isPassword || isFile || iconRight) && 'has-icons-right',
     className
   )
-  const clsPassword = isPassword ? classNames('far fa-eye' + (show ? '' : '-slash')) : null
+  const cssClassPwd = isPassword ? classNames('far fa-eye' + (show ? '' : '-slash')) : null
+  const _type = isFile ? 'text' : isPassword ? (show ? 'text' : 'password') : type
 
   function handleChange(e) {
     const { name, value } = e.target
@@ -36,16 +38,20 @@ export default forwardRef(({
     setShow(!show)
   }
 
+  function onClickFile(e) {
+
+  }
+
   return (
     <div className="field">
 
       {label && <label className="label">{label}</label>}                  
 
-      <div className={clsInput}>
+      <div className={cssClass}>
 
         <input
           className="input"
-          type={isPassword ? (show ? 'text' : 'password') : type}
+          type={_type}
           value={_value}
           onChange={handleChange}
           ref={ref}
@@ -66,7 +72,13 @@ export default forwardRef(({
         
         {isPassword && 
           <span className="icon is-small is-right click" onClick={onClickPassword}>
-            <i className={clsPassword}></i>
+            <i className={cssClassPwd}></i>
+          </span>
+        }
+
+        {isFile && 
+          <span className="icon is-small is-right click" onClick={onClickFile}>
+            <i className="fas fa-folder-open"></i>
           </span>
         }
 

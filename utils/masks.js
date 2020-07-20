@@ -55,7 +55,6 @@ export function date(value) {
     .replace(/(\/\d{4}).+/, '$1')
 }
 
-
 export function time(value) {
   return value
     .replace(/\D/g, '')
@@ -65,6 +64,19 @@ export function time(value) {
 }
 
 
+function currency(value) {
+  return value
+    .toString()
+    .replace(/[^0-9]/g, '')
+    .replace(/(\d+)(\d{2})/, '$1,$2')
+    .replace(/(\d+)(\d{3}.+)/, '$1.$2')
+    .replace(/(\d+)(\d{3}.+)/, '$1.$2')
+    .replace(/(\d+)(\d{3}.+)/, '$1.$2')
+    .replace(/(\d+)(\d{3}.+)/, '$1.$2')
+}
+
+
+
 export default {
   cpf,
   cnpj,
@@ -72,7 +84,8 @@ export default {
   cep,
   phone,
   date,
-  time
+  time,
+  currency
 }
 
 export function applyMask(value, mask) {
@@ -85,6 +98,7 @@ export function applyMask(value, mask) {
       case 'date': return date(value)
       case 'time': return time(value)
       case 'phone': return phone(value)
+      case 'currency': return currency(value)
       default: return value
     }
   }

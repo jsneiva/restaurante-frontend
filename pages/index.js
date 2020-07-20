@@ -1,16 +1,17 @@
+import axios from '../config/axios'
+import utils from '../utils/utils'
 import Link from 'next/link'
-
 import Layout from '../components/site/Layout'
 import Carousel from '../components/site/Carousel'
 import Reservations from '../components/site/Reservations'
 
-export default function Home() {
+export default function Home(props) {
   return (
     <Layout>
       <Carousel />
       <Welcome />
       <BestDishes />
-      <Promotions />
+      <Promotions list={props.listPromo} />
       <OurGallery />
       <Reservations />
     </Layout>
@@ -56,7 +57,8 @@ function BestDishes() {
             </div>
             <div className="column" data-animate="right">
               <img 
-                src="https://ld-wp73.template-help.com/wordpress/prod_21791/v1/wp-content/uploads/2018/06/home-img-1.png" alt="Prato principal do restaurante"
+                src="https://ld-wp73.template-help.com/wordpress/prod_21791/v1/wp-content/uploads/2018/06/home-img-1.png" 
+                alt="Prato principal do restaurante"
               />
             </div>
           </div>
@@ -88,31 +90,11 @@ function BestDishes() {
 }
 
 
-function Promotions() {
-  const list = [
-    {
-      id: 1,
-      image: 'https://picsum.photos/100/50',
-      legend: 'Prato promocional 01',
-      title: 'Macarronada com farinha',
-      description: 'Marcarrão, farinha, salada e arroz.',
-      price: 45.00
-    }, {
-      id: 1,
-      image: 'https://picsum.photos/100',
-      legend: 'Prato promocional 02',
-      title: 'Arroz e feijão gourmet',
-      description: 'Arroz cozido, salada crua, batata frita e feijão',
-      price: 35.50
-    }, {
-      id: 1,
-      image: 'https://picsum.photos/100',
-      legend: 'Prato promocional 03',
-      title: 'Feijão com arroz cozido',
-      description: 'Feijão, salada crua, vinagrete e farinha branca.',
-      price: 37.90
-    }
-  ]
+function Promotions({ list }) {
+  
+  if (! list.length) {
+    return null
+  }
 
   return (
     <section className="section" data-animate="bottom">
@@ -122,20 +104,22 @@ function Promotions() {
           <hr className="st-line" />
         </div>
         <div className="columns is-variable is-8">
-          {list.map((item, index) => (
+          {list.slice(0, 3).map((item, index) => (
             <div key={index} className="column st-promotions">
               <div className="card">
                 <div className="card-image">
                   <figure className="image is-4by3">
-                    <img src={item.image} alt={item.legend} />
+                    <img 
+                      src={item.urlImage} 
+                      alt={item.name} />
                   </figure>
                 </div>
                 <div className="card-content">
-                  <h4 className="title is-4 mb-3">{item.title}</h4>
+                  <h4 className="title is-4 mb-3">{item.name}</h4>
                   <p className="has-text-justified description">{item.description}</p>
                   <div className="level">
                     <button className="level-left button is-danger is-medium">Eu quero</button>
-                    <p className="level-right is-size-3 has-text-right price">R$ {item.price}</p>
+                    <p className="level-right is-size-3 has-text-right price">{utils.formatCurrency(item.price_promo)}</p>
                   </div>
                 </div>
               </div>
@@ -162,12 +146,18 @@ function OurGallery() {
         <div className="columns mt-6">
           <div className="column">
             <figure className="image is-4by2">
-              <img src="https://cdn.pixabay.com/photo/2015/04/20/13/30/kitchen-731351__340.jpg" alt=""/>
+              <img 
+                src="https://cdn.pixabay.com/photo/2015/04/20/13/30/kitchen-731351__340.jpg" 
+                alt="Imagem do nosso ambiente"
+              />
             </figure>
           </div>
           <div className="column">
             <figure className="image is-4by2">
-              <img src="https://cdn.pixabay.com/photo/2016/11/18/14/05/brick-wall-1834784__340.jpg" alt=""/>
+              <img 
+                src="https://cdn.pixabay.com/photo/2016/11/18/14/05/brick-wall-1834784__340.jpg" 
+                alt="Imagem do nosso ambiente"
+              />
             </figure>
           </div>
         </div>
@@ -175,7 +165,10 @@ function OurGallery() {
         <div className="columns">
           <div className="column">
             <figure className="image is-3by1">
-              <img src="https://cdn.pixabay.com/photo/2017/08/30/17/25/restaurant-2697945__340.jpg" alt=""/>
+              <img 
+                src="https://cdn.pixabay.com/photo/2017/08/30/17/25/restaurant-2697945__340.jpg" 
+                alt="Imagem do nosso ambiente"
+              />
             </figure>
           </div>
         </div>        
@@ -186,14 +179,19 @@ function OurGallery() {
             <div className="columns">
               <div className="column">
                 <figure className="image is-2by1">
-                  <img src="https://cdn.pixabay.com/photo/2018/08/10/21/52/restaurant-3597677__340.jpg" alt=""/>
+                  <img 
+                    src="https://cdn.pixabay.com/photo/2018/08/10/21/52/restaurant-3597677__340.jpg" 
+                    alt="Imagem do nosso ambiente"
+                  />
                 </figure>
               </div>  
             </div>
             <div className="columns">
               <div className="column">
                 <figure className="image is-2by1">
-                  <img src="https://cdn.pixabay.com/photo/2014/04/05/11/27/buffet-315691__340.jpg" alt=""/>
+                  <img 
+                    src="https://cdn.pixabay.com/photo/2014/04/05/11/27/buffet-315691__340.jpg" 
+                    alt="Imagem do nosso ambiente"/>
                 </figure>
               </div>
             </div>
@@ -201,8 +199,10 @@ function OurGallery() {
 
           <div className="column">
             <figure className="image is-1by1" style={{height: '100%'}}>
-              <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt=""
-               style={{objectFit: 'cover', objectPosition: 'bottom'}}/>
+              <img 
+                src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" 
+                alt="Imagem do nosso ambiente"
+                style={{objectFit: 'cover', objectPosition: 'bottom'}}/>
             </figure>
           </div>
 
@@ -219,3 +219,15 @@ function OurGallery() {
 }
 
 
+export async function getServerSideProps(ctx) {
+  let listPromo = []
+  try {
+    const resp = await axios.get('/menu/products?is_promo=true')    
+    listPromo = resp.data
+  } catch (error) {
+    console.log('Falha na busca dos itens em promoção')
+  }
+  return {
+    props: { listPromo }
+  }
+}

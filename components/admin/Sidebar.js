@@ -26,7 +26,7 @@ export default function SideBar(props) {
           <Link href="/">
             <a>
               <figure className="image">
-                <img src="/images/logo.svg"alt="Logomarca do restaurante"/>
+                <img src="/images/logo.svg" alt="Logomarca do restaurante"/>
               </figure>
             </a>
           </Link>                    
