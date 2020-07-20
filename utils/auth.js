@@ -12,7 +12,7 @@ export async function userLoggedSSR(ctx) {
     user = resp.data
   } catch (error) {
     //ctx.res.writeHead(302, { Location: '/login' })
-    ctx.res.send(JSON.stringify(error))
+    ctx.res.json(error)
     ctx.res.end()
   }
   return user
