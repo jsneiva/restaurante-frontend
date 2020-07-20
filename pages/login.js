@@ -82,7 +82,7 @@ export default function Login() {
         remember: !!email
       }))
       selector = `input[name="${!!email ? 'password' : 'email'}"]`
-      AppContext.logout()
+      //AppContext.logout()
     } 
     document.querySelector(selector).focus()
   }, [register])

@@ -7,6 +7,7 @@ export default props => {
   const { user, logout, toggleSideBar } = useAppContext()
 
   function exitApp(e) {
+    logout()
     Router.push('/login')
   }
 
