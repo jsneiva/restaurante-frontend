@@ -48,7 +48,7 @@ export default function(props) {
         </div>
         <div className="column">
          <PieChartAdmin />       
-        </div>
+        </div> 
       </div> 
     </Layout>
   )
