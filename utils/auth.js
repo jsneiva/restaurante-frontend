@@ -11,8 +11,8 @@ export async function userLoggedSSR(ctx) {
     const resp = await axios.get('/users/profile')
     user = resp.data
   } catch (error) {
+    ctx.rest.json({mensagem: error})
     //ctx.res.writeHead(302, { Location: '/login' })
-    ctx.res.json(error)
     ctx.res.end()
   }
   return user
