@@ -8,6 +8,7 @@ import Reservations from '../components/site/Reservations'
 export default function Home(props) {
   return (
     <Layout>
+      {props.error && <p>JSON.stringify(props.error)</p>}
       <Carousel />
       <Welcome />
       <BestDishes />
@@ -221,13 +222,15 @@ function OurGallery() {
 
 export async function getServerSideProps(ctx) {
   let listPromo = []
+  let error = null
   try {
     const resp = await axios.get('/menu/products?is_promo=true')    
     listPromo = resp.data
-  } catch (error) {
+  } catch (e) {
+    error = e
     console.log('Falha na busca dos itens em promoção')
   }
   return {
-    props: { listPromo }
+    props: { listPromo, error }
   }
 }
