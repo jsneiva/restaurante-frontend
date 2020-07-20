@@ -8,7 +8,7 @@ import Reservations from '../components/site/Reservations'
 export default function Home(props) {
   return (
     <Layout>
-      {props.error && <p>JSON.stringify(props.error)</p>}
+      {props.error && <p>{JSON.stringify(props.error)}</p>}
       <Carousel />
       <Welcome />
       <BestDishes />
