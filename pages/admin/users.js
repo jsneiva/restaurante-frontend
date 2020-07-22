@@ -1,20 +1,18 @@
 import { useState, useEffect, useRef } from 'react'
 import axios from '../../config/axios'
 import { userLoggedSSR } from '../../utils/auth'
+import { msgBoxConfirm, msgBoxError } from '../../utils/messages'
 
 import Layout from '../../components/admin/Layout'
 import Table from '../../components/common/Table'
 import Input from '../../components/common/Input'
 import InputCheck from '../../components/common/InputCheck'
 import FormInputSearch from '../../components/common/FormInputSearch'
-import MessageBox from '../../components/common/MessageBox'
 import Button from '../../components/common/Button'
 
 const iniState = {
   loading: false,
-  data: [],
-  message: null,
-  error: false
+  data: []
 }
 
 const headers = [
@@ -51,38 +49,27 @@ export default function(props) {
 
   async function remove(id) {
     try {
-      await axios.delete(url + '/' + id)
-      load()
+      if (await msgBoxConfirm('Confirma a exclusão deste usuário?')) {
+        await axios.delete(url + '/' + id)
+        load()
+      }
     } catch (error) {
-      setState({
-        error: true,
-        message: 'Não foi possivel excluir o usuário!'
-      })
+      msgBoxError('Não foi possível excluir o usuário!')
     }
   }
 
   async function save(data) {
-    try {
-      if (data.password !== data.passwordConf) {
-        throw { msg: 'A confirmação de senha não confere!' }
-      }
-      if (data.id) {
-        await axios.put(url + '/' + data.id, data)
-      } else {
-        await axios.post(url, data)
-      }
-      setDataEdit(null)
-      load()
-    } catch (e) {
-      setState({
-        error: true,
-        message: e.msg || 'Não foi possivel salvar os dados!'
-      })
+    if (data.password !== data.passwordConf) {
+      msgBoxError('A confirmação de senha não confere!')
+      return
     }
-  }
-
-  function closeMessage() {
-    setState({ error: false, message: null })
+    if (data.id) {
+      await axios.put(url + '/' + data.id, data)
+    } else {
+      await axios.post(url, data)
+    }
+    setDataEdit(null)
+    load()
   }
 
   function cancel() {
@@ -99,10 +86,8 @@ export default function(props) {
       const resp = await axios.get(url, params && { params })
       setState({ loading: false, data: resp.data })
     } catch (error) {
-      setState({ 
-        loading: false,
-        msgError: 'Não foi possível obter a lista de usuários!'
-       })
+      setState({ loading: false })
+      msgBoxError('Não foi possível obter a lista de usuários!')
     }
   }
 
@@ -131,14 +116,6 @@ export default function(props) {
             />
           </div>
         </div>
-        {state.error && 
-          <MessageBox 
-            small error 
-            message={state.message} 
-            onClick={closeMessage}
-            className="mt-4"
-          />
-        }
         <div>
           <Table
             headers={headers}
@@ -156,6 +133,7 @@ export default function(props) {
 
 function Edit(props) {
   const [data, setData] = useState(props.data)
+  const [waiting, setWaiting] = useState(false)
   const ref = useRef()
 
 
@@ -163,9 +141,15 @@ function Edit(props) {
     setData({ ...data, [name]: value })
   }
 
-  function onSubmit(e) {
+  async function onSubmit(e) {
     e.preventDefault()
-    props.save(data)
+    setWaiting(true)
+    try {
+      await props.save(data)      
+    } catch (error) {
+      msgBoxError('Não foi posível salvar os dados!')
+    }
+    setWaiting(false)
   }
 
   useEffect(() => ref.current.focus(), [])
@@ -203,7 +187,7 @@ function Edit(props) {
             <InputCheck label="Adminstrador do site" name="admin" checked={data.admin} onChange={onChange} small />        
           </section>
           <footer className="modal-card-foot">
-            <Button type="submit" theme="success" icon="fas fa-check">Salvar</Button>
+            <Button type="submit" loading={waiting} theme="success" icon="fas fa-check">Salvar</Button>
             <Button className="ml-2" theme="danger" icon="fas fa-times" onClick={props.cancel}>Cancelar</Button>
           </footer>            
         </div>

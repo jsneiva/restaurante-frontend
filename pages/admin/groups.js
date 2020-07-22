@@ -6,14 +6,12 @@ import Layout from '../../components/admin/Layout'
 import Table from '../../components/common/Table'
 import Input from '../../components/common/Input'
 import FormInputSearch from '../../components/common/FormInputSearch'
-import MessageBox from '../../components/common/MessageBox'
 import Button from '../../components/common/Button'
+import { msgBoxConfirm, msgBoxError } from '../../utils/messages'
 
 const iniState = {
   loading: false,
-  data: [],
-  message: null,
-  error: false
+  data: []
 }
 
 const headers = [
@@ -41,35 +39,23 @@ export default function(props) {
 
   async function remove(id) {
     try {
-      await axios.delete(url + '/' + id)
-      load()
+      if (await msgBoxConfirm('Confirma a exclusão deste grupo?')) {
+        await axios.delete(url + '/' + id)
+        load()            
+      }
     } catch (error) {
-      setState({
-        error: true,
-        message: 'Não foi possivel excluir o grupo!'
-      })
+      msgBoxError('Não foi possível excluir o grupo!')
     }
   }
 
   async function save(data) {
-    try {
-      if (data.id) {
-        await axios.put(url + '/' + data.id, data)
-      } else {
-        await axios.post(url, data)
-      }
-      setDataEdit(null)
-      load()
-    } catch (error) {
-      setState({
-        error: true,
-        message: 'Não foi possivel salvar os dados!'
-      })
+    if (data.id) {
+      await axios.put(url + '/' + data.id, data)
+    } else {
+      await axios.post(url, data)
     }
-  }
-
-  function closeMessage() {
-    setState({ error: false, message: null })
+    setDataEdit(null)
+    load()
   }
 
   function cancel() {
@@ -86,10 +72,8 @@ export default function(props) {
       const resp = await axios.get(url, params && { params })
       setState({ loading: false, data: resp.data })
     } catch (error) {
-      setState({ 
-        loading: false,
-        msgError: 'Não foi possível obter a lista de grupos!'
-       })
+      setState({ loading: false })
+      msgBoxError('Não foi possível obter a lista de grupos!')
     }
   }
 
@@ -118,14 +102,6 @@ export default function(props) {
             />
           </div>
         </div>
-        {state.error && 
-          <MessageBox 
-            small error 
-            message={state.message} 
-            onClick={closeMessage}
-            className="mt-4"
-          />
-        }
         <div>
           <Table
             headers={headers}
@@ -143,15 +119,22 @@ export default function(props) {
 
 function Edit(props) {
   const [data, setData] = useState(props.data)
+  const [waiting, setWaiting] = useState(false)
   const ref = useRef()
 
   function onChange(name, value) {
     setData({ ...data, [name]: value })
   }
 
-  function onSubmit(e) {
+  async function onSubmit(e) {
     e.preventDefault()
-    props.save(data)
+    setWaiting(true)
+    try {
+      await props.save(data)      
+    } catch (e) {
+      msgBoxError('Não foi possível salvar os dados!')
+    }
+    setWaiting(false)
   }
 
   useEffect(() => ref.current.focus())
@@ -177,7 +160,7 @@ function Edit(props) {
             </div>
           </section>          
           <footer className="modal-card-foot">
-            <Button type="submit" theme="success" icon="fas fa-check">Salvar</Button>
+            <Button type="submit" loading={waiting} theme="success" icon="fas fa-check">Salvar</Button>
             <Button className="ml-2" theme="danger" icon="fas fa-times" onClick={props.cancel}>Cancelar</Button>
           </footer>
         </div>

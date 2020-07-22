@@ -644,10 +644,11 @@ input[disabled] {
   border-color: revert !important;
 }
 
-.table-container {
+.table-container .ball-pulse-rise {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
   min-height: 300px;
 }
 

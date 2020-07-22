@@ -7,7 +7,8 @@ export default function({
   icon, 
   small,
   className, 
-  children, 
+  children,
+  loading, 
   ...rest 
 }) {
   const style = 'button' + 
@@ -16,6 +17,7 @@ export default function({
                 (rounded ? ' is-rounded' : '') +                
                 (inverted ? ' is-inverted' : '') +                                
                 (small ? ' is-small' : '') +
+                (loading ? ' is-loading' : '') +
                 (className ? ' ' + className : '')
   return (
     <button 

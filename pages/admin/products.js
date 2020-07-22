@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import axios from '../../config/axios'
 import utils from '../../utils/utils'
 import { userLoggedSSR } from '../../utils/auth'
+import { msgBoxError, msgBoxConfirm } from '../../utils/messages'
 
 import Layout from '../../components/admin/Layout'
 import Table from '../../components/common/Table'
@@ -13,14 +14,11 @@ import FormInputSearch from '../../components/common/FormInputSearch'
 import TextArea from '../../components/common/TextArea'
 import DatePicker from '../../components/common/DatePicker'
 import Select from '../../components/common/Select'
-import MessageBox from '../../components/common/MessageBox'
 import Button from '../../components/common/Button'
 
 const iniState = {
   loading: false,
-  data: [],
-  message: null,
-  error: false
+  data: []
 }
 
 const headers = [
@@ -73,55 +71,39 @@ export default function(props) {
 
   async function remove(id) {
     try {
-      await axios.delete(url + '/' + id)
-      load()
+      if (await msgBoxConfirm('Confirma a exclusão deste produto?')) {
+        await axios.delete(url + '/' + id)
+        load()
+      }
     } catch (error) {
-      setState({
-        error: true,
-        message: 'Não foi possivel excluir o produto!'
-      })
+      msgBoxError('Não foi possível excluir o produto!')
     }
   }
 
   async function save(data) {
-    try {
-      if (!data.is_promo) {
-        delete data.price_promo
-        delete data.end_promo
-      }
-      const fileImage = data.image ? data.image : null
-      delete data.image
-      if (data.id) {
-        await axios.put(url + '/' + data.id, data)
-      } else {
-        const resp = await axios.post(url, data)
-        data.id = resp.data.id
-      }
-      if (fileImage) {
-        const formData = new FormData()
-        formData.append('image', fileImage)
-        await axios.post(
-          url + '/' + data.id + '/images', 
-          formData, 
-          { headers: { 'Content-Type': 'multipart/form-data' } }
-        )
-      }
-      setDataEdit(null)
-      load()
-    } catch (e) {
-      setState({
-        error: true,
-        message: e.msg || 'Não foi possivel salvar os dados!'
-      })
+    if (!data.is_promo) {
+      delete data.price_promo
+      delete data.end_promo
     }
-  }
-
-  function setMessage(oMsg) {
-    if (oMsg) {
-      setState(oMsg)
+    const fileImage = data.image ? data.image : null
+    delete data.image
+    if (data.id) {
+      await axios.put(url + '/' + data.id, data)
     } else {
-      setState({ error: false, message: null })
+      const resp = await axios.post(url, data)
+      data.id = resp.data.id
     }
+    if (fileImage) {
+      const formData = new FormData()
+      formData.append('image', fileImage)
+      await axios.post(
+        url + '/' + data.id + '/images', 
+        formData, 
+        { headers: { 'Content-Type': 'multipart/form-data' } }
+      )
+    }
+    setDataEdit(null)
+    load()
   }
 
   function cancel() {
@@ -138,10 +120,8 @@ export default function(props) {
       const resp = await axios.get(url, params && { params })
       setState({ loading: false, data: resp.data })
     } catch (error) {
-      setState({ 
-        loading: false,
-        msgError: 'Não foi possível obter a lista de produtos!'
-       })
+      setState({ loading: false })
+      msgBoxError('Não foi possível obter a lista de produtos!')
     }
   }
 
@@ -155,7 +135,6 @@ export default function(props) {
             data={dataEdit}
             save={save}
             cancel={cancel} 
-            setMessage={setMessage}
           />      
         }
         <div className="columns">
@@ -171,14 +150,6 @@ export default function(props) {
             />
           </div>
         </div>
-        {state.error && 
-          <MessageBox 
-            small error 
-            message={state.message} 
-            onClick={e => setMessage(null)}
-            className="mt-4"
-          />
-        }
         <div>
           <Table
             headers={headers}
@@ -201,6 +172,7 @@ function Edit(props) {
     end_promo: utils.stringToDate(props.data.end_promo)
    })
   const [groups, setGroups] = useState([])
+  const [waiting, setWaiting] = useState(false)
   const refInput = useRef()
   const refImage = useRef()
 
@@ -208,12 +180,18 @@ function Edit(props) {
     setData({ ...data, [name]: value })
   }
 
-  function onSubmit(e) {
+  async function onSubmit(e) {
     e.preventDefault()    
-    props.save({
-      ...data, 
-      image: refImage.current.files[0]
-    })
+    setWaiting(true)
+    try {
+      await props.save({
+        ...data, 
+        image: refImage.current.files[0]
+      })
+    } catch (error) {
+      msgBoxError('Não foi possível salvar os dados do produto!')
+    }
+    setWaiting(false)
   }
 
   useEffect(() => {
@@ -222,10 +200,7 @@ function Edit(props) {
         const resp = await axios.get('/menu/groups')        
         setGroups(resp.data.map(grp => ({ value: grp.id, label: grp.id + ' - ' + grp.name })))
       } catch (error) {
-        props.setMessage({
-          error: true,
-          message: 'Não foi possível obter os grupos de produtos!'
-        })
+        msgBoxError('Não foi possível obter os grupos de produtos!')
       }
     }
     loadGroups()
@@ -329,7 +304,7 @@ function Edit(props) {
             </div>
           </section>
           <footer className="modal-card-foot">        
-            <Button type="submit" theme="success" icon="fas fa-check">Salvar</Button>
+            <Button type="submit" loading={waiting} theme="success" icon="fas fa-check">Salvar</Button>
             <Button className="ml-2" theme="danger" icon="fas fa-times" onClick={props.cancel}>Cancelar</Button>
           </footer>
         </div>

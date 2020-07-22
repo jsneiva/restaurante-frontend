@@ -24,6 +24,7 @@
     "react-number-format": "^4.4.1",
     "react-responsive-carousel": "^3.2.9",
     "recharts": "^1.8.5",
+    "sweetalert2": "^9.17.0",
     "universal-cookie": "^4.0.3"
   }
 }
