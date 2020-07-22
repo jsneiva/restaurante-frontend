@@ -34,7 +34,7 @@ const headers = [
 const url = '/menu/products'
 
 const Image = props => (
-  <img src={props.urlImage} alt={props.name} width={64} />
+  <img src={props.image} alt={props.name} width={64} />
 )
 
 const Status = ({ promotion, active }) => (

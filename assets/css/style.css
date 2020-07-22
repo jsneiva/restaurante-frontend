@@ -169,7 +169,7 @@ footer .navbar a:hover {
   position: relative;
   max-height: 85vh;
   background-color: var(--color-bg-body);
-  color: rgb(94, 91, 91);
+  color: rgb(94, 91, 91); 
 }
 
 .st-slider-container img {

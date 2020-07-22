@@ -84,7 +84,7 @@ export default function SectionMenu(props) {
                   <div className="columns">
                     <div className="column is-2">
                       <figure className="image is-square">
-                        <img className="is-rounded" src={item.urlImage} alt={item.name} />
+                        <img className="is-rounded" src={item.image} alt={item.name} />
                       </figure>
                     </div>                    
                     <div className="column">
