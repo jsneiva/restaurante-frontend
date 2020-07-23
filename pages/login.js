@@ -42,7 +42,7 @@ export default function Login() {
         if (data.password !== data.passwordConf) {
           throw 'Confirmação de senha incorreta.'
         } 
-        const resp = await axios.post('/users', data)
+        const resp = await axios.post('/register', data)
         setMsg({ message: 'O seu cadastro foi realizado com sucesso!'})
       } else {
         const resp = await axios.post('/login', {
