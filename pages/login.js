@@ -57,6 +57,7 @@ export default function Login() {
         }
         Router.push('/admin')
       }
+      setLoading(false)
     } catch (error) {
       setLoading(false)      
       setMsg({
