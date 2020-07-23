@@ -110,17 +110,19 @@ function Promotions({ list }) {
                 <div className="card-image">
                   <figure className="image is-4by3">
                     <img 
-                      src={item.urlImage} 
+                      src={item.image} 
                       alt={item.name} />
                   </figure>
                 </div>
-                <div className="card-content">
+                <div className="card-content" style={{ minHeight: 250 }}>
                   <h4 className="title is-4 mb-3">{item.name}</h4>
-                  <p className="has-text-justified description">{item.description}</p>
-                  <div className="level">
-                    <button className="level-left button is-danger is-medium">Eu quero</button>
-                    <p className="level-right is-size-3 has-text-right price">{utils.formatCurrency(item.price_promo)}</p>
-                  </div>
+                  <p className="description">{item.description}</p>
+                </div>
+                <div className="card-footer">
+                  <div className="container level py-2 px-5">
+                    <button className="button is-danger is-medium">Eu quero</button>
+                    <p className="is-size-3 price">{utils.formatCurrency(item.price_promo)}</p>
+                  </div>                  
                 </div>
               </div>
             </div>

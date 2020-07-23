@@ -150,6 +150,11 @@ footer .navbar a:hover {
   padding: 15px;
 }
 
+.st-footer-buttons a:hover {
+  background-color: rgba(255,255,255,0.2) !important;
+
+}
+
 .st-input {
   border: none;
   border-radius: 0;
@@ -556,8 +561,8 @@ hr.st-line {
 }
 
 .adm-footer a:hover {
-  color: #FF760C !important;
-  font-weight: 700;
+  color: var(--color-logo-01) !important;
+  font-weight: 500;
 }
 
 .adm-main {

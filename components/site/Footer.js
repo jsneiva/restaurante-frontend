@@ -18,8 +18,8 @@ export default function Footer(props) {
           </div>
 
           <div className="column has-text-centered">
-          <h4 className="subtitle has-text-weight-medium has-text-grey-lighter">Siga-nos</h4>
-            <p className="buttons is-centered">
+            <h4 className="subtitle has-text-weight-medium has-text-grey-lighter">Siga-nos</h4>
+            <p className="buttons is-centered st-footer-buttons">
               <a className="button is-light is-outlined" href="/facebook">
                 <span className="icon">
               <i className="fab fa-facebook-f"></i></span>

@@ -4,6 +4,7 @@ import MessageBox from '../common/MessageBox'
 import utils from '../../utils/utils'
 
 import Loading from '../common/Loading'
+import InputCheck from '../common/InputCheck'
 
 export default function SectionMenu(props) {
   const [groups, setGroups] = useState([])
@@ -11,6 +12,7 @@ export default function SectionMenu(props) {
   const [loading, setLoading] = useState(false)
   const [selGroup, setSelGroup] = useState(0)
   const [msg, setMsg] = useState(null)
+  const [selPromo, setSelPromo] = useState(false)
 
   async function loadGroups() {
     let oMsg = null
@@ -35,7 +37,11 @@ export default function SectionMenu(props) {
     let oMsg = null, result = []
     setLoading(true)
     try {
-      const resp = await axios.get('/menu/products?group_id=' + selGroup)
+      const params = {
+        group_id: selGroup,
+        is_promo: selPromo
+      }
+      const resp = await axios.get('/menu/products', { params })
       result = resp.data
     } catch (e) {
       oMsg = {
@@ -48,13 +54,24 @@ export default function SectionMenu(props) {
     if (oMsg) setMsg(oMsg)
   }
 
+  function onChangePromo(name, checked) {
+    setSelPromo(checked)
+  }
+
   useEffect(() => { loadGroups() }, [])
 
-  useEffect(() => { loadProducts() }, [selGroup])
+  useEffect(() => { loadProducts() }, [selGroup, selPromo])
 
   return (
     <div className="columns">
       <div className="column is-4">
+        <p className="ml-4 mb-5">
+          <InputCheck 
+            label="&nbsp;Somente promoções"
+            checked={selPromo}
+            onChange={onChangePromo}
+          />
+        </p>
         {groups.length > 0 && 
           <ul id="menu-groups">
             {groups.map(item => (
@@ -76,7 +93,7 @@ export default function SectionMenu(props) {
             <Loading />
           </div>
         }
-        {products.length > 0 && 
+        {products.length > 0 && !loading && 
           <ul id="menu-products">
             {products.map(item => (
               <li key={item.id}>

@@ -2,9 +2,6 @@ import React, { useState } from 'react'
 
 import DatePicker, { setDefaultLocale } from 'react-datepicker'
 import masks from '../../utils/masks'
-import ptBR from 'date-fns/locale/pt-BR'
-
-setDefaultLocale(ptBR)
 
 export default function({ 
   label,
