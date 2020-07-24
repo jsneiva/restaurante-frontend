@@ -15,6 +15,7 @@ export default function(props) {
             title="Reservas"
             bgColor="#c23616"
             counter={props.reservations}
+            url="/admin/reservations"
           />
         </div>
         <div className="column">
@@ -23,6 +24,7 @@ export default function(props) {
             title="Contatos"
             bgColor="#10ac84"
             counter={props.contacts}
+            url="/admin/contacts"
           />
         </div>
         <div className="column">
@@ -31,6 +33,7 @@ export default function(props) {
             bgColor="#273c75"
             title="Produtos"
             counter={props.products}
+            url="/admin/menu/products"
           />
         </div>
         <div className="column">
@@ -39,6 +42,7 @@ export default function(props) {
             bgColor="#833471"
             title="Usuários"
             counter={props.users}
+            url="/admin/users"
           />
         </div>
       </div>
