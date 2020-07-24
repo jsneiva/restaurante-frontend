@@ -528,6 +528,7 @@ hr.st-line {
 .adm-sidebar li a:active,
 .adm-sidebar li a.active {
   text-decoration: none;
+  font-weight: bold;  
   background-color: var(--color-logo-02);
 }
 
