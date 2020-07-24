@@ -33,7 +33,7 @@ export default function(props) {
             bgColor="#273c75"
             title="Produtos"
             counter={props.products}
-            url="/admin/menu/products"
+            url="/admin/products"
           />
         </div>
         <div className="column">
