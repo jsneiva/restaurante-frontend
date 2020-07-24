@@ -19,7 +19,6 @@ export function LineChartAdmin(props) {
     setLoading(true)
     try {
       const resp = await axios.get('/totals/days/7')
-      console.log(resp.data)
       setData(resp.data.map(item => ({
         Dia: format(new Date(item.date), 'EEEE', { locale: ptBR }),
         Contatos: item.contacts,

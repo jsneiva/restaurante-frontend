@@ -29,7 +29,7 @@ export default props => {
             <span>&nbsp;&nbsp;{user.username}</span>
           </div>
           <button 
-            className="button is-light is-outlined is-small ml-5"
+            className="button is-light is-outlined is-small ml-5 adm-header-btn-exit"
             onClick={exitApp}
           >
             Sair

@@ -35,8 +35,8 @@ export default function(props) {
     return !!(state.user && state.user.username)
   }
 
-  function toggleSideBar() { 
-    setState({ ...state, sideBar: !state.sideBar })
+  function toggleSideBar(value) { 
+    setState({ ...state, sideBar: !!value === value ? value : !state.sideBar })
   }
 
   async function loadUser() {
@@ -60,8 +60,6 @@ export default function(props) {
     toggleSideBar
   }
 
-//  useEffect(() => { loadUser() }, [])
- 
   return (
     <AppContext.Provider value={ctx}>    
       {props.children}

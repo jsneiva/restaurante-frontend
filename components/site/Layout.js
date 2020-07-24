@@ -35,7 +35,7 @@ export default function(props) {
   return (
     <>
       <Head>
-        <title>Meu Site de Restaurante</title>
+        <title>Sabor & Delícia Restaurante</title>
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />        
       </Head>
